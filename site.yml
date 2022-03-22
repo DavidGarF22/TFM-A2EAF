@@ -1,0 +1,26 @@
+---
+
+# TFM-Playbook01
+# Este playbook realizará una adquisición de memoria de un nodo utilizando LiME.
+# En caso de que LiME no esté presente en el nodo, preparará y realizará la instalación antes de realizar la adquisición.
+# La adquisición se realizará en remoto desde la máquina controladora y se almacenará en formato raw en un fichero .dd
+
+- name: Adquisición de memoria en nodos Ubuntu mediante LiME
+  hosts: ubuntu
+  vars:
+    memorydumpformat: raw
+  tasks:
+
+    - name: Comprobar si LiME ya está instalado.
+      import_role:
+        name: existelime
+        
+    - name: Instalar LiME en caso necesario.
+      include_role:
+        name: installlime
+      when: encontrado=="0"
+
+    - name: Print a message
+      debug:
+        var: encontrado
+

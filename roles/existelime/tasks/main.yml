@@ -1,0 +1,15 @@
+---
+# El rol existelime comprobará la existencia de LiME en el nodo.
+# Buscará el archivo lime.ko y en caso de no encontrarlo devolverá "0"
+
+- name: Comprobar si LiME está instalado
+  find:
+    paths: "{{homedirectory}}"
+    patterns: "LiME"
+    file_type: directory
+  register: resultadobusqueda
+      
+- name: guardar resultado del test de instalación de LiME
+  set_fact: 
+    encontrado: "{{resultadobusqueda.matched}}"
+

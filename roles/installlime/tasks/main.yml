@@ -1,0 +1,23 @@
+---
+# Instalación de LiME
+
+- name: Instalar git
+  debug:
+    msg: "Aquí se incluye la instalación de git"
+    
+- name: Clonar LiME
+  debug:
+    msg: "Aquí se clona el git de LiME"
+    
+- name: Instalar las dependencias-make
+  debug:
+    msg: "Instalación de make"
+    
+- name: Instalar las dependencias-build-essential
+  debug:
+    msg: "Instalación de build-essential"
+    
+- name: Instalar las dependencias-linux-headers
+  debug:
+    msg: "Instalación de linux-headers"
+
