@@ -1,0 +1,35 @@
+---
+# Adquisición de memoria mediante la ejecución de LiME
+
+- name: Comprobar que LiME no está ya cargado en la memoria
+  debug:
+    msg: "Aquí se intentaría comprobar que LiME no está cargado en memoria"
+
+- name: Adquirir memoria
+  become: yes
+  shell:
+    chdir: "{{limedirectory}}"
+    cmd: insmod "{{limedirectory}}"/lime.ko path="{{memorydumppath}}" format=raw
+    
+- name: Calcular hash en el nodo
+  debug:
+    msg: "Aquí iría bien calcular el hash en local"
+
+- name: Descargar LiME del kernel
+  become: yes
+  shell:
+    cmd: rmmod lime
+    
+- name: Envío de la adquisición a la máquina controladora
+  fetch:
+    src: "{{memorydumppath}}"
+    dest: "{{storepath}}-{{ansible_facts.date_time.iso8601_basic_short}}{{extension}}"
+    
+- name: Calcular el hash en el controlador
+  debug:
+    msg: "Aquí se calcularía el hash en el controlador"
+     
+- name: Eliminar el archivo de la captura en el nodo
+  file:
+    path: "{{memorydumppath}}"
+    state: absent

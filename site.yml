@@ -10,17 +10,20 @@
   vars:
     memorydumpformat: raw
   tasks:
+  
+#    - name: Mostrar ansible_facts
+#      debug:
+#        var: ansible_facts.date_time
 
     - name: Comprobar si LiME ya está instalado.
       import_role:
-        name: existelime
+        name: checklime
         
     - name: Instalar LiME en caso necesario.
       include_role:
         name: installlime
       when: encontrado=="0"
 
-    - name: Print a message
-      debug:
-        var: encontrado
-
+    - name: Ejecutar LiME y realizar la adquisición de memoria
+      import_role:
+        name: dumpmemory

@@ -2,8 +2,8 @@
 # tasks file for installgit
 
 - name: instalar git
-become: yes
-apt:
-  name: git
-  state: present
+  become: yes
+  apt:
+    name: git
+    state: present
 

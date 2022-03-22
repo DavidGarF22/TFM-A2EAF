@@ -8,4 +8,8 @@
 Para alcanzar la automatización se utilizarán herramientas de automatización para la administración de sistemas ya existentes en el mercado, inicialmente Ansible, si bien, en función de los resultados de la investigación y el desarrollo del proyecto no se descarta el uso de otras herramientas alternativas.
 
   La adquisición se realizará también utilizando herramientas ya existentes. Se buscarán aquellas más convenientes entre las disponibles, e.g. para la adquisición de memoria se analizarán las opciones de LiME para sistemas Linux y DumpIt en el caso de sistemas Windows.
+  
+  Comandos de ejecución:
+  
+    Prueba 1: ansible-playbook -i inventories/hosts.yml site.yml -K
 
