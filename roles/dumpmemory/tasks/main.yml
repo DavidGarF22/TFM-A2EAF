@@ -5,11 +5,19 @@
   debug:
     msg: "Aquí se intentaría comprobar que LiME no está cargado en memoria"
 
+- name: Añadir la etiqueta horaria a la etiqueta de la evidencia
+  set_fact:
+    evidencelabel: "{{memorydumppath}}-{{ansible_facts.date_time.iso8601_basic_short}}{{extension}}"
+
 - name: Adquirir memoria
   become: yes
   shell:
     chdir: "{{limedirectory}}"
-    cmd: insmod "{{limedirectory}}"/lime.ko path="{{memorydumppath}}" format=raw
+    cmd: insmod "{{limedirectory}}"/lime.ko path="{{evidencelabel}}" format=raw
+    
+- name: Mostrar nombre de fichero creado.
+  debug:
+    var: evidencelabel
     
 - name: Calcular hash en el nodo
   debug:
@@ -22,8 +30,8 @@
     
 - name: Envío de la adquisición a la máquina controladora
   fetch:
-    src: "{{memorydumppath}}"
-    dest: "{{storepath}}-{{ansible_facts.date_time.iso8601_basic_short}}{{extension}}"
+    src: "{{evidencelabel}}"
+    dest: "{{storepath}}"
     
 - name: Calcular el hash en el controlador
   debug:
@@ -31,5 +39,5 @@
      
 - name: Eliminar el archivo de la captura en el nodo
   file:
-    path: "{{memorydumppath}}"
+    path: "{{evidencelabel}}"
     state: absent
