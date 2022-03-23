@@ -2,6 +2,7 @@
 # Este fichero contiene las variables utilizadas en nodos Ubuntu
 homedirectory: "/home/david"
 limedirectory: "/home/david/LiME/src"
-memorydumppath: "/home/david/memDump.dd"
-storepath: "/home/david/memDump"
+memorydumppath: "/home/david"
+memorydumpname: "memDump"
+storagepath: "/home/david/evidencesStorage"
 extension: ".dd"

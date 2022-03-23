@@ -7,37 +7,40 @@
 
 - name: Añadir la etiqueta horaria a la etiqueta de la evidencia
   set_fact:
-    evidencelabel: "{{memorydumppath}}-{{ansible_facts.date_time.iso8601_basic_short}}{{extension}}"
+    evidencelabel: "{{memorydumpname}}-{{ansible_facts.date_time.iso8601_basic_short}}{{extension}}"
 
 - name: Adquirir memoria
   become: yes
   shell:
     chdir: "{{limedirectory}}"
-    cmd: insmod "{{limedirectory}}"/lime.ko path="{{evidencelabel}}" format=raw
+    cmd: insmod "{{limedirectory}}"/lime.ko path="{{memorydumppath}}/{{evidencelabel}}" format=raw
     
-- name: Mostrar nombre de fichero creado.
-  debug:
-    var: evidencelabel
-    
-- name: Calcular hash en el nodo
-  debug:
-    msg: "Aquí iría bien calcular el hash en local"
-
 - name: Descargar LiME del kernel
   become: yes
   shell:
     cmd: rmmod lime
     
+- name: Añadir el usuario que realiza la adquisición a la ruta de almacenaje
+  set_fact:
+    userstoragepath: "{{storagepath}}/{{ansible_facts.user_id}}"
+    
 - name: Envío de la adquisición a la máquina controladora
   fetch:
     src: "{{evidencelabel}}"
-    dest: "{{storepath}}"
-    
-- name: Calcular el hash en el controlador
-  debug:
-    msg: "Aquí se calcularía el hash en el controlador"
-     
+    dest: "{{userstoragepath}}"
+
 - name: Eliminar el archivo de la captura en el nodo
   file:
     path: "{{evidencelabel}}"
     state: absent
+    
+- name: Completar la ruta de almacenaje con el nombre del nodo
+  set_fact:
+    completestoragepath: "{{userstoragepath}}/{{inventory_hostname}}"
+        
+- name: Calcular el valor hash de la evidencia en el controlador
+  shell:
+    cmd: sha256sum "{{completestoragepath}}/{{evidencelabel}}" > "{{completestoragepath}}/{{evidencelabel}}".hash
+  delegate_to: localhost
+     
+
