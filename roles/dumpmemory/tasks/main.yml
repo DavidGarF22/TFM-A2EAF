@@ -1,10 +1,6 @@
 ---
 # Adquisición de memoria mediante la ejecución de LiME
 
-- name: Comprobar que LiME no está ya cargado en la memoria
-  debug:
-    msg: "Aquí se intentaría comprobar que LiME no está cargado en memoria"
-
 - name: Añadir la etiqueta horaria a la etiqueta de la evidencia
   set_fact:
     evidencelabel: "{{memorydumpname}}-{{ansible_facts.date_time.iso8601_basic_short}}{{extension}}"
