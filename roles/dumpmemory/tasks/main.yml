@@ -3,7 +3,7 @@
 
 - name: Añadir la etiqueta horaria a la etiqueta de la evidencia
   set_fact:
-    evidencelabel: "{{memorydumpname}}-{{ansible_facts.date_time.iso8601_basic_short}}{{extension}}"
+    evidencelabel: "{{memorydumpname}}-{{ansible_facts.date_time.iso8601_basic_short}}{{memorydumpextension}}"
 
 - name: Adquirir memoria
   become: yes

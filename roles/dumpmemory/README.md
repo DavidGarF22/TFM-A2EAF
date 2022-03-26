@@ -1,31 +1,38 @@
-Role Name
+dumpmemory
 =========
 
-A brief description of the role goes here.
+Realiza un volcado de memoria del nodo y la envía a la máquina controladora donde la almacenará en una estructura de carpetas con la siguiente forma:
+
+      carpetaAlmacen/usuario/nodo/memDump-YYYYMMDDTHHMMSS.dd
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Se requiere que LiME esté instalado en el nodo en el que se quiere realizar el volcado de memoria. Dicha instalación se puede realizar ejecutando el **role _installlime_** siempre que no se localice la carpeta LiME en el nodo. Para realizar la comprobación de si existe la carpeta LiME o no se dispone del **role _checklime_** 
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+**memorydumpname:** Nombre inicial del archivo que contiene la adquisición de memoria. Se establecerá a nivel de grupo de nodos. De esta manera todos los archivos que contengan un volcado de memoria comenzarán de la misma manera, pudiendo identificar así las evidencias de tipo adquisición de memoria.
+
+**memorydumpextension:** Extensión de los archivos que contendrán adquisiciones de memoria. Se establecerá a nivel de grupo de nodos.
+
+**storagepath:** Ruta donde se almacenarán las evidencias adquiridas. Se establecerá a nivel de grupo de nodos.
+
+**limedirectory:** Ruta donde se ha instalado LiME. Se establecerá a nivel de grupo de nodos y será la misma que se utilice en el role *installlime*.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Ninguna.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         # Sin parámetros
+         - dumpmemory
 
 License
 -------
@@ -35,4 +42,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+David García

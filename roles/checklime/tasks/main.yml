@@ -1,5 +1,5 @@
 ---
-# El rol checklime comprobará la existencia de LiME en el nodo.
+# El role checklime comprobará la existencia de LiME en el nodo.
 # Buscará el directorio LiME en el directorio home del usuario remoto 
 # y en caso de no encontrarlo devolverá "0"
 
