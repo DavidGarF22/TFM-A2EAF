@@ -1,5 +1,6 @@
 ---
-# Este fichero contiene las variables utilizadas en nodos Ubuntu
+# Definición de variables utilizadas para el grupo de nodos "ubuntu"
+
 homedirectory: "/home/david"
 limedirectory: "/home/david/LiME/src"
 memorydumppath: "/home/david"

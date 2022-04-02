@@ -9,6 +9,8 @@
   hosts: ubuntu
   vars:
     memorydumpformat: raw
+    ansible_user: "{{user}}"
+    ansible_become_password: "{{becomepassword}}"
   tasks:
   
 #    - name: Mostrar ansible_facts
