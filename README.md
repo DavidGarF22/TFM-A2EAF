@@ -11,5 +11,5 @@ Para alcanzar la automatización se utilizarán herramientas de automatización 
   
   Comandos de ejecución:
   
-    ansible-playbook -i inventories/hosts.yml site.yml -K
+    ansible-playbook -i inventories/hosts.yml site.yml
 
