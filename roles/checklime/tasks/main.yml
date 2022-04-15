@@ -3,14 +3,13 @@
 # Buscará el directorio LiME en el directorio home del usuario remoto 
 # y en caso de no encontrarlo devolverá "0"
 
-- name: Comprobar si LiME está instalado
+- name: Buscar LiME
   find:
     paths: "{{homedirectory}}"
     patterns: "LiME"
     file_type: directory
-  register: resultadobusqueda
+  register: resultado
       
-- name: guardar resultado del test de instalación de LiME
+- name: guardar resultado checklime
   set_fact: 
-    encontrado: "{{resultadobusqueda.matched}}"
-
+    checklimeresult: "{{resultado.matched}}"

@@ -1,9 +1,17 @@
 ---
 # Adquisición de memoria mediante la ejecución de LiME
 
-- name: Añadir la etiqueta horaria a la etiqueta de la evidencia
+- name: Añadir hora al etiquetado
   set_fact:
     evidencelabel: "{{memorydumpname}}-{{ansible_facts.date_time.iso8601_basic_short}}{{memorydumpextension}}"
+
+- name: Añadir usuario al etiquetado
+  set_fact:
+    userstoragepath: "{{storagepath}}/{{ansible_facts.user_id}}"
+
+- name: Añadir nombre del nodo al etiquetado
+  set_fact:
+    completestoragepath: "{{userstoragepath}}/{{inventory_hostname}}"
 
 - name: Adquirir memoria
   become: yes
@@ -16,25 +24,17 @@
   shell:
     cmd: rmmod lime
     
-- name: Añadir el usuario que realiza la adquisición a la ruta de almacenaje
-  set_fact:
-    userstoragepath: "{{storagepath}}/{{ansible_facts.user_id}}"
-    
-- name: Envío de la adquisición a la máquina controladora
+- name: Envío de la adquisición al controlador
   fetch:
     src: "{{evidencelabel}}"
     dest: "{{userstoragepath}}"
 
-- name: Eliminar el archivo de la captura en el nodo
+- name: Eliminar la captura local
   file:
     path: "{{evidencelabel}}"
     state: absent
-    
-- name: Completar la ruta de almacenaje con el nombre del nodo
-  set_fact:
-    completestoragepath: "{{userstoragepath}}/{{inventory_hostname}}"
         
-- name: Calcular el valor hash de la evidencia en el controlador
+- name: Calcular hash de la evidencia
   shell:
     cmd: sha256sum "{{completestoragepath}}/{{evidencelabel}}" > "{{completestoragepath}}/{{evidencelabel}}".hash
   delegate_to: localhost
