@@ -17,12 +17,14 @@
       - make
       - build-essential
     state: present
+    update_cache: yes
     
 - name: Instalar dependencias (linux-headers)
   become: yes
   apt:
     name: "linux-headers-{{ansible_facts.kernel}}"
     state: present
+    update_cache: yes
     
 - name: Compilar LiME
   shell:
