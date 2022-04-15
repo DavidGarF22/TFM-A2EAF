@@ -22,6 +22,15 @@
         name: installlime
       when: checklimeresult=="0"
 
+    - name: Generar etiqueta de la evidencia
+      import_role:
+        name: labelevidence
+      vars:
+        evidencetype: "{{memorydumpname}}"
+        evidenceextension: "{{memorydumpextension}}"
+
     - name: Ejecutar LiME
       import_role:
         name: dumpmemory
+      vars:
+        memorydumplabel: "{{evidencelabel}}"

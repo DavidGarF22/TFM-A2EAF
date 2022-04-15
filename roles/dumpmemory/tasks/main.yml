@@ -1,23 +1,13 @@
 ---
-# Adquisición de memoria mediante la ejecución de LiME
-
-- name: Añadir hora al etiquetado
-  set_fact:
-    evidencelabel: "{{memorydumpname}}-{{ansible_facts.date_time.iso8601_basic_short}}{{memorydumpextension}}"
-
-- name: Añadir usuario al etiquetado
-  set_fact:
-    userstoragepath: "{{storagepath}}/{{ansible_facts.user_id}}"
-
-- name: Añadir nombre del nodo al etiquetado
-  set_fact:
-    completestoragepath: "{{userstoragepath}}/{{inventory_hostname}}"
+# El role dumpmemory se encargará de la adquisición de memoria mediante la ejecución de LiME
+# Además, almacenará la evidencia adquirida utilizando la etiqueta que recibirá como parámetro
+# y calculará el valor hash que permitirá garantizar la integridad de la misma.
 
 - name: Adquirir memoria
   become: yes
   shell:
     chdir: "{{limedirectory}}"
-    cmd: insmod "{{limedirectory}}"/lime.ko path="{{memorydumppath}}/{{evidencelabel}}" format=raw
+    cmd: insmod "{{limedirectory}}"/lime.ko path="{{memorydumppath}}/{{memorydumplabel}}" format=raw
     
 - name: Descargar LiME del kernel
   become: yes
@@ -26,17 +16,17 @@
     
 - name: Envío de la adquisición al controlador
   fetch:
-    src: "{{evidencelabel}}"
+    src: "{{memorydumplabel}}"
     dest: "{{userstoragepath}}"
 
 - name: Eliminar la captura local
   file:
-    path: "{{evidencelabel}}"
+    path: "{{memorydumplabel}}"
     state: absent
         
 - name: Calcular hash de la evidencia
   shell:
-    cmd: sha256sum "{{completestoragepath}}/{{evidencelabel}}" > "{{completestoragepath}}/{{evidencelabel}}".hash
+    cmd: sha256sum "{{completestoragepath}}/{{memorydumplabel}}" > "{{completestoragepath}}/{{memorydumplabel}}".hash
   delegate_to: localhost
      
 

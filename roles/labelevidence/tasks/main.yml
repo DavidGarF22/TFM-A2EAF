@@ -1,2 +1,18 @@
 ---
-# tasks file for labelevidence
+# El role labelevidence se encargará de etiquetar una evidencia incluyendo:
+#   - Nombre descriptivo del tipo de evidencia que recibirá como parámetro
+#   - Fecha y hora en la que se realiza la adquisición
+#   - Usuario que adquiere la evidencia
+#   - Nodo del que se adquiere la evidencia
+
+- name: Añadir hora al etiquetado
+  set_fact:
+    evidencelabel: "{{evidencetype}}-{{ansible_facts.date_time.iso8601_basic_short}}{{evidenceextension}}"
+
+- name: Añadir usuario al etiquetado
+  set_fact:
+    userstoragepath: "{{storagepath}}/{{ansible_facts.user_id}}"
+
+- name: Añadir nombre del nodo al etiquetado
+  set_fact:
+    completestoragepath: "{{userstoragepath}}/{{inventory_hostname}}"

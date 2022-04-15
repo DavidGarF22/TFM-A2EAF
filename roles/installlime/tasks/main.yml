@@ -1,5 +1,5 @@
 ---
-# Instalación de LiME
+# El role intalllime se encargará de la instalación de LiME en el nodo.
 
 - name: Instalar git
   import_role:
