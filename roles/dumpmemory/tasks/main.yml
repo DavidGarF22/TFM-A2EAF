@@ -3,16 +3,17 @@
 # Además, almacenará la evidencia adquirida utilizando la etiqueta que recibirá como parámetro
 # y calculará el valor hash que permitirá garantizar la integridad de la misma.
 
+- name: Descargar LiME del kernel
+  become: yes
+  shell:
+    cmd: rmmod lime
+  failed_when: false
+
 - name: Adquirir memoria
   become: yes
   shell:
     chdir: "{{limedirectory}}"
     cmd: insmod "{{limedirectory}}"/lime.ko path="{{memorydumppath}}/{{memorydumplabel}}" format=raw
-    
-- name: Descargar LiME del kernel
-  become: yes
-  shell:
-    cmd: rmmod lime
     
 - name: Envío de la adquisición al controlador
   fetch:
