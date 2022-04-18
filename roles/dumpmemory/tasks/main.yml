@@ -15,7 +15,7 @@
     chdir: "{{limedirectory}}"
     cmd: insmod "{{limedirectory}}"/lime.ko path="{{memorydumppath}}/{{memorydumplabel}}" format=raw
     
-- name: Envío de la adquisición al controlador
+- name: Envíar adquisición al controlador
   fetch:
     src: "{{memorydumplabel}}"
     dest: "{{userstoragepath}}"
