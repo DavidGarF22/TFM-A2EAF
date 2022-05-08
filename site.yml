@@ -13,24 +13,41 @@
     ansible_become_password: "{{becomepassword}}"
   tasks:
  
-    - name: Comprobar instalación de LiME
-      import_role:
-        name: checklime
+    #- name: Comprobar instalación de LiME
+    #  import_role:
+    #    name: checklime
         
-    - name: Instalar LiME
-      include_role:
-        name: installlime
-      when: checklimeresult=="0"
+    #- name: Instalar LiME
+    #  include_role:
+    #    name: installlime
+    #  when: checklimeresult=="0"
 
-    - name: Generar etiqueta de la evidencia
+    #- name: Generar etiqueta de la adquisición de memoria
+    #  import_role:
+    #    name: labelevidence
+    #  vars:
+    #    evidencetype: "{{memorydumpname}}"
+    #    evidenceextension: "{{memorydumpextension}}"
+
+    #- name: Ejecutar LiME
+    #  import_role:
+    #    name: dumpmemory
+    #  vars:
+    #    memorydumplabel: "{{evidencelabel}}"
+    
+    - name: Instalar sleuthkit
       import_role:
+        name: installsleuthkit
+    
+    - name: Generar etiqueta de la adquisición del sistema de ficheros
+      include_role:
         name: labelevidence
       vars:
-        evidencetype: "{{memorydumpname}}"
-        evidenceextension: "{{memorydumpextension}}"
-
-    - name: Ejecutar LiME
-      import_role:
-        name: dumpmemory
+        evidencetype: "{{fsevidencename}}"
+        evidenceextension: "{{fsevidenceextension}}"
+    
+    - name: Ejecutar comandos sleuthkit
+      include_role:
+        name: sleuthkitcommands
       vars:
-        memorydumplabel: "{{evidencelabel}}"
+        fsevidencelabel: "{{evidencelabel}}"

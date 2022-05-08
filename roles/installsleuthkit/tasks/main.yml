@@ -1,0 +1,9 @@
+---
+# El role installsleuthkit se encargará de instalar la suite sleuthkit en el nodo.
+
+- name: instalar Sleuthkit
+  become: yes
+  apt:
+    name: sleuthkit
+    state: present
+    update_cache: yes

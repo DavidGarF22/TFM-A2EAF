@@ -15,17 +15,17 @@
     chdir: "{{limedirectory}}"
     cmd: insmod "{{limedirectory}}"/lime.ko path="{{memorydumppath}}/{{memorydumplabel}}" format=raw
     
-- name: Envíar adquisición al controlador
+- name: Envíar adquisición de memoria al controlador
   fetch:
     src: "{{memorydumplabel}}"
     dest: "{{userstoragepath}}"
 
-- name: Eliminar la captura local
+- name: Eliminar la captura de memoria local
   file:
     path: "{{memorydumplabel}}"
     state: absent
         
-- name: Calcular hash de la evidencia
+- name: Calcular hash de la adquisición de memoria
   shell:
     cmd: sha256sum "{{completestoragepath}}/{{memorydumplabel}}" > "{{completestoragepath}}/{{memorydumplabel}}".hash
   delegate_to: localhost

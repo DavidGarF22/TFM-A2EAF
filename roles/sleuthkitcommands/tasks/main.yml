@@ -1,0 +1,22 @@
+---
+# El role sleuthkitcommands se encargará de ejecutar los comandos de la suite sleuthkit para recuperar información acerca del sistema de ficheros del nodo.
+
+- name: listar particiones de un volumen
+  become: yes
+  shell:
+    cmd: mmls "{{volumen}}" > "{{fsevidencelabel}}"
+    
+- name: Envíar adquisición del sistema de ficheros al controlador
+  fetch:
+    src: "{{fsevidencelabel}}"
+    dest: "{{userstoragepath}}"
+
+- name: Eliminar la evidencia del sistema de ficheros local
+  file:
+    path: "{{fsevidencelabel}}"
+    state: absent
+        
+- name: Calcular hash de la adquisición del sistema de ficheros
+  shell:
+    cmd: sha256sum "{{completestoragepath}}/{{fsevidencelabel}}" > "{{completestoragepath}}/{{fsevidencelabel}}".hash
+  delegate_to: localhost
