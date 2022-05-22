@@ -4,11 +4,14 @@
 # Este playbook realizará una adquisición de información de un nodo Windows utilizando Dumpit.
 
 - name: Adquirir información del sistema de ficheros en Ubuntu (LiME)
-  hosts: ubuntu
+  hosts: windows
   vars:
     memorydumpformat: raw
-    ansible_user: "{{user}}"
-    ansible_become_password: "{{becomepassword}}"
+    ansible_user: "{{ansible_user}}"
+    ansible_become_password: "{{ansible_password}}"
   tasks:
    
-    - name: Adquirir memoria en Windows
+    - name: Comprobar conexión Windows
+      win_ping:
+      
+    - name: Adquirir memoria de Windows
