@@ -1,0 +1,30 @@
+---
+
+# TFM-Playbook02
+# Este playbook realizará una adquisición de información de un nodo utilizando Sleuthkit.
+# En caso de que Sleuthkit no esté presente en el nodo, preparará y realizará la instalación antes de realizar la adquisición.
+# La adquisición se realizará en remoto desde la máquina controladora y se almacenará en un fichero .txt
+
+- name: Adquirir información del sistema de ficheros en Ubuntu (Sleuthkit)
+  hosts: ubuntu
+  vars:
+    memorydumpformat: raw
+    ansible_user: "{{user}}"
+    ansible_become_password: "{{becomepassword}}"
+  tasks:
+    - name: Instalar sleuthkit
+      import_role:
+        name: installsleuthkit
+   
+    - name: Generar etiqueta de la adquisición del sistema de ficheros
+      include_role:
+        name: labelevidence
+      vars:
+        evidencetype: "{{fsevidencename}}"
+        evidenceextension: "{{fsevidenceextension}}"
+    
+    - name: Ejecutar comandos sleuthkit
+      include_role:
+        name: sleuthkitcommands
+      vars:
+        fsevidencelabel: "{{evidencelabel}}"

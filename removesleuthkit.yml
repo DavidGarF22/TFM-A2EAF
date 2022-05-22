@@ -1,0 +1,19 @@
+---
+
+# TFM-Playbook resetnodes
+# Este playbook reseteará los nodos a su estado inicial, sin git ni LiME
+
+- name: Adquisición de memoria en nodos Ubuntu mediante LiME
+  hosts: ubuntu
+  vars:
+    ansible_user: "{{user}}"
+    ansible_become_password: "{{becomepassword}}"
+  become: yes
+  
+  tasks:
+  
+    - name: Desinstalar sleuhtkit
+      apt:
+        pkg: sleuthkit
+        state: absent
+

@@ -1,0 +1,14 @@
+---
+
+# TFM-Playbook03
+# Este playbook realizará una adquisición de información de un nodo Windows utilizando Dumpit.
+
+- name: Adquirir información del sistema de ficheros en Ubuntu (LiME)
+  hosts: ubuntu
+  vars:
+    memorydumpformat: raw
+    ansible_user: "{{user}}"
+    ansible_become_password: "{{becomepassword}}"
+  tasks:
+   
+    - name: Adquirir memoria en Windows

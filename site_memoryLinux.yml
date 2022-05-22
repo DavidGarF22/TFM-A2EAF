@@ -1,0 +1,37 @@
+---
+
+# TFM-Playbook01
+# Este playbook realizará una adquisición de memoria de un nodo utilizando LiME.
+# En caso de que LiME no esté presente en el nodo, preparará y realizará la instalación antes de realizar la adquisición.
+# La adquisición se realizará en remoto desde la máquina controladora y se almacenará en formato raw en un fichero .dd
+
+- name: Adquirir memoria en Ubuntu (LiME)
+  hosts: ubuntu
+  vars:
+    memorydumpformat: raw
+    ansible_user: "{{user}}"
+    ansible_become_password: "{{becomepassword}}"
+  tasks:
+ 
+    - name: Comprobar instalación de LiME
+      import_role:
+        name: checklime
+       
+    - name: Instalar LiME
+      include_role:
+        name: installlime
+      when: checklimeresult=="0"
+
+    - name: Generar etiqueta de la adquisición de memoria
+      import_role:
+        name: labelevidence
+      vars:
+        evidencetype: "{{memorydumpname}}"
+        evidenceextension: "{{memorydumpextension}}"
+
+    - name: Ejecutar LiME
+      import_role:
+        name: dumpmemory
+      vars:
+        memorydumplabel: "{{evidencelabel}}"
+
