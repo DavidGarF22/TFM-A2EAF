@@ -8,7 +8,6 @@
 - name: Adquirir memoria en Ubuntu (LiME)
   hosts: ubuntu
   vars:
-    memorydumpformat: raw
     ansible_user: "{{user}}"
     ansible_become_password: "{{becomepassword}}"
   tasks:
@@ -31,7 +30,7 @@
 
     - name: Ejecutar LiME
       import_role:
-        name: dumpmemory
+        name: dumpmemorylinux
       vars:
         memorydumplabel: "{{evidencelabel}}"
 

@@ -1,9 +1,11 @@
 ---
 
 # TFM-Playbook03
-# Este playbook realizará una adquisición de información de un nodo Windows utilizando Dumpit.
+# Este playbook realizará una adquisición de información de un nodo Windows utilizando winPMEM.
+# En caso de que winPMEM no esté presente en el nodo, copiará el ejecutable antes de realizar la adquisición.
+# La adquisición se realizará en remoto desde la máquina controladora y se almacenará en formato raw en un fichero .raw
 
-- name: Adquirir información del sistema de ficheros en Ubuntu (LiME)
+- name: Adquirir memoria en Windows (winPMEM)
   hosts: windows
   vars:
     memorydumpformat: raw
@@ -15,3 +17,4 @@
       win_ping:
       
     - name: Adquirir memoria de Windows
+      
