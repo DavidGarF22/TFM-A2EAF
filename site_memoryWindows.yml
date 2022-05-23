@@ -7,14 +7,20 @@
 
 - name: Adquirir memoria en Windows (winPMEM)
   hosts: windows
-  vars:
-    memorydumpformat: raw
-    ansible_user: "{{ansible_user}}"
-    ansible_become_password: "{{ansible_password}}"
   tasks:
    
     - name: Comprobar conexión Windows
       win_ping:
       
+    - name: Generar etiqueta de la adquisición de memoria
+      import_role:
+        name: labelevidence
+      vars:
+        evidencetype: "{{memorydumpname}}"
+        evidenceextension: "{{memorydumpextension}}"
+        
     - name: Adquirir memoria de Windows
-      
+      import_role:
+        name: dumpmemorywindows
+      vars:
+        memorydumplabel: "{{evidencelabel}}"

@@ -1,9 +1,14 @@
 ---
 # Definición de variables utilizadas para el grupo de nodos "windows"
 
-ansible_connection: winrm
-ansible_port: 5986
-ansible_winrm_server_cert_validation: ignore
-ansible_winrm_scheme: https
+ansible_port: 22
+ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+ansible_ssh_retries: 3
+ansible_shell_type: powershell
 ansible_become_method: runas
-ansible_become_user: SYSTEM
+ansible_become_user: "{{ansible_user}}"
+
+winpmempath: c:\Temp\winpmem
+memorydumpname: "memDump"
+memorydumpextension: ".raw"
+storagepath: "/home/{{ansible_user}}/evidencesStorage"

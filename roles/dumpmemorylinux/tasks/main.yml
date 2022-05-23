@@ -1,5 +1,5 @@
 ---
-# El role dumpmemory se encargará de la adquisición de memoria mediante la ejecución de LiME
+# El role dumpmemorylinux se encargará de la adquisición de memoria mediante la ejecución de LiME
 # Además, almacenará la evidencia adquirida utilizando la etiqueta que recibirá como parámetro
 # y calculará el valor hash que permitirá garantizar la integridad de la misma.
 
