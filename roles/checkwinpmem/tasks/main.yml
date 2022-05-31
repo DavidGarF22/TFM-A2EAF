@@ -1,0 +1,15 @@
+---
+# El role checkwinpmem comprobará la existencia de winPMEM en el nodo.
+# Buscará el directorio winpmem en el directorio c:/Temp/ 
+# y en caso de no encontrarlo devolverá "0"
+
+- name: Buscar winpmem
+  win_find:
+    paths: c:\Temp
+    patterns: "winpmem"
+    file_type: directory
+  register: resultado
+      
+- name: guardar resultado checkwinpmem
+  set_fact: 
+    checkwinpmemresult: "{{resultado.matched}}"

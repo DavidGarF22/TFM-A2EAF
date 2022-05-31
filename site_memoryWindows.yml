@@ -8,9 +8,10 @@
 - name: Adquirir memoria en Windows (winPMEM)
   hosts: windows
   tasks:
-   
-    - name: Comprobar conexión Windows
-      win_ping:
+        
+    - name: Instalar winpmem
+      include_role:
+        name: installwinpmem
       
     - name: Generar etiqueta de la adquisición de memoria
       import_role:

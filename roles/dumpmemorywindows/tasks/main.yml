@@ -2,17 +2,6 @@
 # El role dumpmemorywindows se encargará de la adquisición de memoria mediante la ejecución de winPMEM
 # Además, almacenará la evidencia adquirida utilizando la etiqueta que recibirá como parámetro
 # y calculará el valor hash que permitirá garantizar la integridad de la misma.
-
-
-- name: Crear directorio winPMEM
-  win_file:
-    path: "{{winpmempath}}"
-    state: directory
-
-- name: Copiar ejecutable winPMEM
-  win_copy:
-    src: winpmem.exe
-    dest: "{{winpmempath}}/winpmem.exe"
         
 - name: Adquirir memoria
   ansible.windows.win_powershell:

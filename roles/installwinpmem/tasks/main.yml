@@ -1,0 +1,12 @@
+---
+# El role installwinpmem se encargará de que winpmem esté disponible en nodo
+
+- name: Crear directorio winPMEM
+  win_file:
+    path: "{{winpmempath}}"
+    state: directory
+
+- name: Copiar ejecutable winPMEM
+  win_copy:
+    src: winpmem.exe
+    dest: "{{winpmempath}}/winpmem.exe"
